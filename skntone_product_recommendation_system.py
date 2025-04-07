@@ -55,7 +55,14 @@ plt.ylabel("Number of Products")
 plt.show()
 
 # Get user input for skin concern
-user_concern = input("What skin concern would you like to address? (e.g., ingrown hairs, blemishes, hyperpigmentation): ").lower()
+import streamlit as st
+
+user_concern = st.text_input("What skin concern would you like to address? (e.g. ingrowns, hyperpigmentation, dark marks)").lower()
+
+if user_concern:
+    results = multi_concern_recommender(user_concern)
+    st.markdown("### Here's what we recommend:")
+    st.dataframe(results[['product', 'matched_concern', 'sentiment']])
 
 # Filter the products based on the user’s concern
 recommended_products = prods[prods['concern'].str.contains(user_concern)]
