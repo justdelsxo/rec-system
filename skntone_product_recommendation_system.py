@@ -56,7 +56,12 @@ st.markdown(
     """,
     unsafe_allow_html=True)
 
-st.title("✨Skntone Product Recommendations✨")
+st.markdown(
+    """
+    <h1 style='text-align: center; color: black; font-family: Arial;'>Skntone Product Recommendations</h1>
+    """,
+    unsafe_allow_html=True
+)
 st.markdown("Tell me what your skin’s going through — I’ll show you what’s worked for girls just like you.")
 
 # -----------------------------
