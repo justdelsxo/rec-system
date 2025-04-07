@@ -174,7 +174,7 @@ if user_input:
                 st.markdown(f"_Concern:_ {row['matched_concern']}")
 
                 score = int((row['sentiment'] + 1) / 2 * 100)
-                st.markdown(f"**Loved by SKNTONE customers:** {score}%")
+                st.markdown(f"**{score}% of customers with the same concern bought this**")
 
 # -----------------------------
 # Visual Charts
