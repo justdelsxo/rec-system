@@ -8,7 +8,7 @@ Original file is located at
     https://colab.research.google.com/drive/1-c0ZvZ_r8Kxi3kXweLbQJbpOKd1DwhPr
 """
 
-)
+
 # SKNTONE Product Recommender App with Brand Styling + Images
 
 import streamlit as st
