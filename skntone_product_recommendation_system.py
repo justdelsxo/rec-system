@@ -28,7 +28,7 @@ st.markdown(
         <img src="https://cdn.shopify.com/s/files/1/0474/0661/2645/files/Skntone_coloured_logo_transparent.png?v=1650906263" alt="SKNTONE Logo" width="200">
     </div>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True)
 
 # -----------------------------
 # Streamlit Styling (Brand Color)
