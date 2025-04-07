@@ -132,18 +132,18 @@ def multi_concern_recommender(user_input, threshold=0.2):
 
         # Combine similarity + sentiment
         combined_scores = sim_scores + prods['sentiment'].fillna(0.0) * 0.3
-
-        # Only keep products above threshold
         indices = combined_scores > threshold
+
         if not any(indices):
-            continue  # skip if none match for this concern
+            continue  # skip if no strong match
 
         matched_prods = prods[indices].copy()
-        # Boost score if product explicitly lists the concern
-boost = matched_prods['concern'].apply(lambda x: 0.5 if concern in x else 0)
-matched_prods['match_score'] = combined_scores[indices] + boost
-        matched_prods['matched_concern'] = concern
 
+        # Boost if concern is directly mentioned
+        boost = matched_prods['concern'].apply(lambda x: 0.5 if concern in x else 0)
+        matched_prods['match_score'] = combined_scores[indices] + boost
+
+        matched_prods['matched_concern'] = concern
         all_matches = pd.concat([all_matches, matched_prods], ignore_index=True)
 
     if all_matches.empty:
