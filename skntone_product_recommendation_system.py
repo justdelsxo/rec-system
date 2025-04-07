@@ -11,8 +11,11 @@ Original file is located at
 
 # SKNTONE Product Recommender App with Brand Styling + Images
 
+# SKNTONE Product Recommender App with Brand Styling + Images
+
 import streamlit as st
-st.set_page_config(page_title="Product Recommendations", layout="centered")import streamlit as st
+st.set_page_config(page_title="Product Recommendations", layout="centered")
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -23,35 +26,38 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 nltk.download('vader_lexicon')
 
+# -----------------------------
+# Styling & Logo
+# -----------------------------
 st.markdown(
     """
-    <div style="text-align: center;">
-        <img src="https://cdn.shopify.com/s/files/1/0474/0661/2645/files/Skntone_coloured_logo_transparent.png?v=1650906263" alt="SKNTONE Logo" width="200">
-    </div>
-    """,
-    unsafe_allow_html=True)
-
-# -----------------------------
-# Streamlit Styling (Brand Color)
-# -----------------------------
-SKNTONE_COLOR = "#000000"
-st.set_page_config(page_title="Product Recommendations", layout="centered")
-st.markdown(
-    f"""
     <style>
-        .stApp {{
-            background-color: black;
-        }}
-        h1, h2, h3, h4 {{
-            color: {SKNTONE_COLOR};
-        }}
+        .stApp {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        body, div, p, h1, h2, h3, h4, h5 {
+            color: #000000;
+            font-family: Arial, sans-serif;
+        }
+        .css-18ni7ap, .css-1d391kg {
+            background-color: #ffffff;
+        }
     </style>
     """,
     unsafe_allow_html=True
 )
 
+st.markdown(
+    """
+    <div style="text-align: center; padding-bottom: 10px;">
+        <img src="https://cdn.shopify.com/s/files/1/0474/0661/2645/files/Skntone_coloured_logo_transparent.png?v=1650906263" alt="SKNTONE Logo" width="200">
+    </div>
+    """,
+    unsafe_allow_html=True)
+
 st.title("Skntone Product Recommendations")
-st.markdown("Tell me what your skins going through & I'll show you whats worked for girls just like you.")
+st.markdown("Sis, tell me what your skin’s going through — I’ll show you what’s worked for girls just like you.")
 
 # -----------------------------
 # Product Data + Image URLs
@@ -62,7 +68,7 @@ product_data = [
     {"product": "Bikini Area Mask", "concern": "blocked pores, dark marks, hyperpigmentation, redness", "key_ingredient": "Bentonite Clay, Turmeric, Aloe Vera", "product_type": "mask", "image": "https://cdn.shopify.com/s/files/1/0474/0661/2645/products/IMG_3357.jpg?v=1678575811"},
     {"product": "Intimate Toner", "concern": "hyperpigmentation, dark marks, texture irregularities, strawberry legs", "key_ingredient": "Glycolic Acid, Witch hazel, Aloe", "product_type": "toner", "image": "https://cdn.shopify.com/s/files/1/0474/0661/2645/products/IMG_3351.jpg?v=1678577474"},
     {"product": "Body Oil Spray", "concern": "dry skin, sensitive skin", "key_ingredient": "Jojoba Oil, Oat Oil, Soya Bean Oil", "product_type": "oil", "image": "https://cdn.shopify.com/s/files/1/0474/0661/2645/products/IMG_3364_db661095-455c-4c85-ad0f-e7515452b832.jpg?v=1678575843"},
-    {"product": "Salt Body Scrub", "concern": "rough skin, flakey skin", "key_ingredient": "Dead Sea Salt, Himalayan Salt, Almond Oil", "product_type": "scrub", "image": "https://cdn.shopify.com/s/files/1/0474/0661/2645/products/IMG_3357.jpg?v=1678575811"},
+    {"product": "Salt Body Scrub", "concern": "rough skin, flakey skin", "key_ingredient": "Dead Sea Salt, Himalayan Salt, Almond Oil", "product_type": "scrub", "image": "https://cdn.shopify.com/s/files/1/0474/0661/2645/products/IMG_3366.jpg?v=1678575911"},
     {"product": "Intimate Wash", "concern": "unbalanced pH balance, intimate odour, menstrual cramps", "key_ingredient": "Aloe, Cranberry Extract, Lavender, Chamomile", "product_type": "wash", "image": "https://cdn.shopify.com/s/files/1/0474/0661/2645/products/IMG_3388.jpg?v=1678577003"}
 ]
 prods = pd.DataFrame(product_data)
@@ -139,13 +145,10 @@ def multi_concern_recommender(user_input, threshold=0.2):
         return pd.DataFrame()
 
     for concern in matched_concerns:
-        # Filter products that explicitly mention the concern
         filtered = prods[prods['concern'].str.contains(concern, case=False, na=False)].copy()
-
         if filtered.empty:
             continue
 
-        # Compute similarity + sentiment score
         concern_vec = vectorizer.transform([concern])
         sim_scores = cosine_similarity(concern_vec, tfidf_matrix).flatten()
         similarity_scores = pd.Series(sim_scores, index=prods.index).loc[filtered.index]
@@ -163,27 +166,29 @@ def multi_concern_recommender(user_input, threshold=0.2):
 
     all_matches = all_matches.drop_duplicates(subset='product')
     return all_matches.sort_values(by='match_score', ascending=False)
+
 # -----------------------------
 # User Input + Display Options
 # -----------------------------
-user_input = st.text_input("What do you want help with -- ingrowns, dry skin, dark marks?")
+user_input = st.text_input("What do you want help with — ingrowns, dry skin, dark marks?")
 
 if user_input:
     recommendations = multi_concern_recommender(user_input)
 
-    st.subheader("For that, we recommend using one or a combination of the following..")
+    if not recommendations.empty:
+        st.subheader("Let’s get that skin glowing! These are your best matches:")
 
-    # Show products in a grid (3 per row)
-    num_cols = 3
-    rows = [recommendations[i:i+num_cols] for i in range(0, recommendations.shape[0], num_cols)]
+        num_cols = 3
+        rows = [recommendations[i:i+num_cols] for i in range(0, recommendations.shape[0], num_cols)]
 
-    for row_chunk in rows:
-        cols = st.columns(len(row_chunk))
-        for col, (_, row) in zip(cols, row_chunk.iterrows()):
-            with col:
-                st.image(row['image'], use_container_width=True)
-                st.markdown(f"**{row['product']}**")
-                st.markdown(f"_Concern:_ {row['matched_concern']}")
-
-                score = int((row['sentiment'] + 1) / 2 * 100)
-                st.markdown(f"**{score}% of customers with the same concern bought this**")
+        for row_chunk in rows:
+            cols = st.columns(len(row_chunk))
+            for col, (_, row) in zip(cols, row_chunk.iterrows()):
+                with col:
+                    st.image(row['image'], use_container_width=True)
+                    st.markdown(f"**{row['product']}**")
+                    st.markdown(f"_Concern:_ {row['matched_concern']}")
+                    score = int((row['sentiment'] + 1) / 2 * 100)
+                    st.markdown(f"**{score}% of customers with the same concern bought this**")
+    else:
+        st.warning("Hmm, I couldn’t find an exact match. Try different wording or concerns!")
