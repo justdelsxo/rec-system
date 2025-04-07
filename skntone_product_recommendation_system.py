@@ -115,6 +115,55 @@ st.title("SKNTONE Product Recommendation System")
 
 user_input = st.text_input("What skin concern would you like to address? (e.g. ingrowns, dry skin, dark marks)")
 
+# Create a known concerns list to try to cover all possibly inputs for Skntones products based on data from google analytics and shopify
+
+known_concerns = [
+    "ingrown hairs", "dark bikini area", "razor bumps", "redness", "irritation",
+    "dark marks", "blemishes", "hyperpigmentation",
+    "dry skin", "discolouration", "texture irregularities",
+    "pH balance", "odour", "menstrual cramps",
+    "exfoliation", "strawberry legs", "uneven tone", "itchiness"
+]
+
+from sklearn.metrics.pairwise import cosine_similarity
+
+def extract_mapped_concerns(user_input, known_concerns, synonym_map):
+    # Step 1: Replace slang with standard terms using your synonym map
+    cleaned_input = user_input.lower()
+    for slang, standard in synonym_map.items():
+        cleaned_input = cleaned_input.replace(slang, standard)
+
+    # Step 2: Match concerns
+    matched = [c for c in known_concerns if c in cleaned_input]
+    return matched
+
+def multi_concern_recommender(user_input, threshold=0.2):
+    matched_concerns = extract_mapped_concerns(user_input, known_concerns, synonym_map)
+    all_matches = pd.DataFrame()
+
+    for concern in matched_concerns:
+        concern_vec = vectorizer.transform([concern])
+        sim_scores = cosine_similarity(concern_vec, tfidf_matrix).flatten()
+
+        # Combine with sentiment
+        combined_scores = sim_scores + prods['sentiment'].fillna(0.0) * 0.3
+
+        # Keep all products that are a good match
+        matched_prods = prods[combined_scores > threshold].copy()
+        matched_prods['match_score'] = combined_scores[combined_scores > threshold]
+        matched_prods['matched_concern'] = concern
+
+        all_matches = pd.concat([all_matches, matched_prods], ignore_index=True)
+
+    # Remove duplicates (if multiple concerns lead to same product)
+    all_matches = all_matches.drop_duplicates(subset='product')
+
+    # Sort by match score
+    all_matches = all_matches.sort_values(by='match_score', ascending=False)
+
+    return all_matches[['product', 'matched_concern', 'concern', 'product_type', 'sentiment', 'match_score']]
+
+
 if user_input:
     recommendations = multi_concern_recommender(user_input)
     st.subheader("Recommended Products for You:")
@@ -203,52 +252,5 @@ plt.show()
 
 """# Improve functionality by allowing multiple recommendations"""
 
-# Create a known concerns list to try to cover all possibly inputs for Skntones products based on data from google analytics and shopify
-
-known_concerns = [
-    "ingrown hairs", "dark bikini area", "razor bumps", "redness", "irritation",
-    "dark marks", "blemishes", "hyperpigmentation",
-    "dry skin", "discolouration", "texture irregularities",
-    "pH balance", "odour", "menstrual cramps",
-    "exfoliation", "strawberry legs", "uneven tone", "itchiness"
-]
-
-from sklearn.metrics.pairwise import cosine_similarity
-
-def extract_mapped_concerns(user_input, known_concerns, synonym_map):
-    # Step 1: Replace slang with standard terms using your synonym map
-    cleaned_input = user_input.lower()
-    for slang, standard in synonym_map.items():
-        cleaned_input = cleaned_input.replace(slang, standard)
-
-    # Step 2: Match concerns
-    matched = [c for c in known_concerns if c in cleaned_input]
-    return matched
-
-def multi_concern_recommender(user_input, threshold=0.2):
-    matched_concerns = extract_mapped_concerns(user_input, known_concerns, synonym_map)
-    all_matches = pd.DataFrame()
-
-    for concern in matched_concerns:
-        concern_vec = vectorizer.transform([concern])
-        sim_scores = cosine_similarity(concern_vec, tfidf_matrix).flatten()
-
-        # Combine with sentiment
-        combined_scores = sim_scores + prods['sentiment'].fillna(0.0) * 0.3
-
-        # Keep all products that are a good match
-        matched_prods = prods[combined_scores > threshold].copy()
-        matched_prods['match_score'] = combined_scores[combined_scores > threshold]
-        matched_prods['matched_concern'] = concern
-
-        all_matches = pd.concat([all_matches, matched_prods], ignore_index=True)
-
-    # Remove duplicates (if multiple concerns lead to same product)
-    all_matches = all_matches.drop_duplicates(subset='product')
-
-    # Sort by match score
-    all_matches = all_matches.sort_values(by='match_score', ascending=False)
-
-    return all_matches[['product', 'matched_concern', 'concern', 'product_type', 'sentiment', 'match_score']]
 
 multi_concern_recommender("I have ingrowns and dark inner thighs")
