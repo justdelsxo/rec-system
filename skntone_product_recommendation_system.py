@@ -39,6 +39,18 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+st.markdown(
+    """
+    <style>
+    /* Reduce spacing above the input box */
+    div[data-baseweb="input"] {
+        margin-top: -20px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
