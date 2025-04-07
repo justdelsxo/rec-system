@@ -12,6 +12,7 @@ Original file is located at
 # SKNTONE Product Recommender App with Brand Styling + Images
 
 import streamlit as st
+st.set_page_config(page_title="Product Recommendations", layout="centered")import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
