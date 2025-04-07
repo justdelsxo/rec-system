@@ -204,7 +204,7 @@ def multi_concern_recommender(user_input, threshold=0.2):
 st.markdown(
     """
     <div style="margin-bottom: -10px; font-weight: bold;">
-        What do you want help with?
+        What are your skin concerns?
     </div>
     """,
     unsafe_allow_html=True
