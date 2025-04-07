@@ -202,10 +202,10 @@ def multi_concern_recommender(user_input, threshold=0.2):
 # Custom prompt above the input box
 st.markdown("**What do you want help with?**")
 
-# Input box with faded placeholder text
 user_input = st.text_input(
     label="",
     placeholder="ingrowns, dry skin, dark marks?",
+)
 )
 
 if user_input:
