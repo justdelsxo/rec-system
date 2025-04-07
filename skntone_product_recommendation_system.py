@@ -13,24 +13,31 @@ import streamlit as st
 st.set_page_config(page_title="Product Recommendations", layout="centered")
 st.markdown(
     """
+    st.markdown(
+    """
     <style>
-    /* Style Streamlit text input box */
+    /* Style Streamlit input box */
     div[data-baseweb="input"] > div {
-        background-color: #f5f5f5 !important;  /* light grey background */
-        border: 2px solid black !important;    /* bold black border */
-        border-radius: 10px !important;        /* smooth rounded edges */
+        background-color: #f5f5f5 !important;
+        border: 2px solid black !important;
+        border-radius: 10px !important;
         padding: 10px !important;
-        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);  /* subtle shadow */
     }
 
     input {
-        color: black !important;               /* text color */
+        color: black !important;
         font-size: 16px !important;
         font-family: 'Arial', sans-serif !important;
+    }
+
+    input::placeholder {
+        color: black !important;  /* Makes placeholder text visible */
+        opacity: 0.6 !important;  /* Adjusts how faded it looks */
     }
     </style>
     """,
     unsafe_allow_html=True
+)
 )
 st.markdown(
     """
