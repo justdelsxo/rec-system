@@ -11,7 +11,24 @@ Original file is located at
 
 import streamlit as st
 st.set_page_config(page_title="Product Recommendations", layout="centered")
+st.markdown(
+    """
+    <style>
+    /* Style the text input box */
+    div[data-baseweb="input"] > div {
+        background-color: #f5f5f5 !important;
+        border: 1.5px solid black !important;
+        border-radius: 8px;
+        padding: 8px;
+    }
 
+    input {
+        color: black !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -103,7 +120,9 @@ avg_sentiment = reviews_final.groupby('product')['sentiment'].mean().reset_index
 prods = prods.merge(avg_sentiment, on='product', how='left')
 prods['sentiment'] = prods['sentiment'].fillna(0.0)
 
-# Turning the product information (concerns and ingredients) into something the system can understand. helping understad which products are similar to what somesones looking for based on keywords
+# Turning the product information (concerns and ingredients) into something the system can understand. 
+# Helping understand which products are similar to what somesones looking for based on keywords
+
 prods['search_text'] = prods['concern'] + ' ' + prods['key_ingredient']
 vectorizer = TfidfVectorizer()
 tfidf_matrix = vectorizer.fit_transform(prods['search_text'])
