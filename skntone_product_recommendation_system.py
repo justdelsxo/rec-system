@@ -202,7 +202,14 @@ def multi_concern_recommender(user_input, threshold=0.2):
 #Based on the input, well recommend products thatll help with those concerns
 
 # Custom prompt above the input box
-st.markdown("**What do you want help with?**")
+st.markdown(
+    """
+    <div style="margin-bottom: -10px; font-weight: bold;">
+        What do you want help with?
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 user_input = st.text_input(
     label="",
