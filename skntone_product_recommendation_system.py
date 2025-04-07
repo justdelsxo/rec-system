@@ -169,7 +169,7 @@ if user_input:
         cols = st.columns(len(row_chunk))
         for col, (_, row) in zip(cols, row_chunk.iterrows()):
             with col:
-                st.image(row['image'], use_column_width=True)
+                st.image(row['image'], use_container_width=True)
                 st.markdown(f"**{row['product']}**")
                 st.markdown(f"_Concern:_ {row['matched_concern']}")
 
