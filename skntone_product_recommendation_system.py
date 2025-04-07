@@ -28,7 +28,7 @@ st.markdown(
     f"""
     <style>
         .stApp {{
-            background-color: white;
+            background-color: black;
         }}
         h1, h2, h3, h4 {{
             color: {SKNTONE_COLOR};
