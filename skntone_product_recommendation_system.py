@@ -140,24 +140,12 @@ def multi_concern_recommender(user_input, threshold=0.2):
 # -----------------------------
 user_input = st.text_input("What skin concern would you like to address?")
 
-layout_choice = st.radio("Choose a layout:", ["Emoji Enhanced", "Side-by-Side Columns"])
-
 if user_input:
     recommendations = multi_concern_recommender(user_input)
 
     st.subheader("Your Personalized Recommendations:")
 
-    if layout_choice == "Emoji Enhanced":
-        emoji_map = {
-            'oil': '💛',
-            'wash': '🫧',
-            'cream': '👐',
-            'scrub': '🧂',
-            'toner': '✨',
-            'treatment': '❗',
-            'mask': '🧖'
-        }
-
+   
         for _, row in recommendations.iterrows():
             emoji = emoji_map.get(row['product_type'], '🌿')
             st.image(row['image'], width=250)
