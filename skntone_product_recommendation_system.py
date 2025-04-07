@@ -50,7 +50,7 @@ st.markdown(
 
 st.markdown(
     """
-    <div style="text-align: center; padding-bottom: 10px;">
+    <div style="text-align: center; padding-bottom: 6px;">
         <img src="https://cdn.shopify.com/s/files/1/0474/0661/2645/files/Skntone_coloured_logo_transparent.png?v=1650906263" alt="SKNTONE Logo" width="200">
     </div>
     """,
