@@ -124,34 +124,33 @@ def multi_concern_recommender(user_input, threshold=0.2):
     all_matches = pd.DataFrame()
 
     if not matched_concerns:
-        return pd.DataFrame()  # return empty if no concerns matched
+        return pd.DataFrame()
 
     for concern in matched_concerns:
+        # Filter products that explicitly mention the concern
+        filtered = prods[prods['concern'].str.contains(concern, case=False, na=False)].copy()
+
+        if filtered.empty:
+            continue
+
+        # Compute similarity + sentiment score
         concern_vec = vectorizer.transform([concern])
         sim_scores = cosine_similarity(concern_vec, tfidf_matrix).flatten()
+        similarity_scores = pd.Series(sim_scores, index=prods.index).loc[filtered.index]
 
-        # Combine similarity + sentiment
-        combined_scores = sim_scores + prods['sentiment'].fillna(0.0) * 0.3
-        indices = combined_scores > threshold
+        sentiment_scores = filtered['sentiment'].fillna(0.0)
+        combined = similarity_scores + sentiment_scores * 0.3
 
-        if not any(indices):
-            continue  # skip if no strong match
+        filtered['match_score'] = combined
+        filtered['matched_concern'] = concern
 
-        matched_prods = prods[indices].copy()
-
-        # Boost if concern is directly mentioned
-        boost = matched_prods['concern'].apply(lambda x: 0.5 if concern in x else 0)
-        matched_prods['match_score'] = combined_scores[indices] + boost
-
-        matched_prods['matched_concern'] = concern
-        all_matches = pd.concat([all_matches, matched_prods], ignore_index=True)
+        all_matches = pd.concat([all_matches, filtered], ignore_index=True)
 
     if all_matches.empty:
         return pd.DataFrame()
 
     all_matches = all_matches.drop_duplicates(subset='product')
     return all_matches.sort_values(by='match_score', ascending=False)
-
 # -----------------------------
 # User Input + Display Options
 # -----------------------------
