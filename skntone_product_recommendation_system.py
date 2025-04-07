@@ -123,14 +123,29 @@ def multi_concern_recommender(user_input, threshold=0.2):
     matched_concerns = extract_mapped_concerns(user_input, known_concerns, synonym_map)
     all_matches = pd.DataFrame()
 
+    if not matched_concerns:
+        return pd.DataFrame()  # return empty if no concerns matched
+
     for concern in matched_concerns:
         concern_vec = vectorizer.transform([concern])
         sim_scores = cosine_similarity(concern_vec, tfidf_matrix).flatten()
-        combined_scores = sim_scores + prods['sentiment'] * 0.3
-        matched_prods = prods[combined_scores > threshold].copy()
-        matched_prods['match_score'] = combined_scores[combined_scores > threshold]
+
+        # Combine similarity + sentiment
+        combined_scores = sim_scores + prods['sentiment'].fillna(0.0) * 0.3
+
+        # Only keep products above threshold
+        indices = combined_scores > threshold
+        if not any(indices):
+            continue  # skip if none match for this concern
+
+        matched_prods = prods[indices].copy()
+        matched_prods['match_score'] = combined_scores[indices]
         matched_prods['matched_concern'] = concern
+
         all_matches = pd.concat([all_matches, matched_prods], ignore_index=True)
+
+    if all_matches.empty:
+        return pd.DataFrame()
 
     all_matches = all_matches.drop_duplicates(subset='product')
     return all_matches.sort_values(by='match_score', ascending=False)
