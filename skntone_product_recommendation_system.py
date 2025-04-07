@@ -19,6 +19,7 @@ st.markdown(
         background-color: #f5f5f5 !important;
         border: 2px solid black !important;
         border-radius: 10px !important;
+        padding: 2px !important;
        
     }
 
