@@ -206,7 +206,6 @@ user_input = st.text_input(
     label="",
     placeholder="ingrowns, dry skin, dark marks?",
 )
-)
 
 if user_input:
     recommendations = multi_concern_recommender(user_input)
