@@ -23,7 +23,7 @@ nltk.download('vader_lexicon')
 # Streamlit Styling (Brand Color)
 # -----------------------------
 SKNTONE_COLOR = "#000000"
-st.set_page_config(page_title="Skntone Product Recommendation System", layout="centered")
+st.set_page_config(page_title="Product Recommendations", layout="centered")
 st.markdown(
     f"""
     <style>
@@ -39,7 +39,7 @@ st.markdown(
 )
 
 st.title("Skntone Product Recommendation System")
-st.markdown("Tell me your skin concerns and we’ll recommend the best product(s) for you.")
+st.markdown("Tell me what your skins going through & I'll show you whats worked for girls just like you.")
 
 # -----------------------------
 # Product Data + Image URLs
@@ -154,12 +154,12 @@ def multi_concern_recommender(user_input, threshold=0.2):
 # -----------------------------
 # User Input + Display Options
 # -----------------------------
-user_input = st.text_input("What skin concern would you like to address?")
+user_input = st.text_input("What do you want help with -- ingrowns, dry skin, dark marks?")
 
 if user_input:
     recommendations = multi_concern_recommender(user_input)
 
-    st.subheader("Your Personalized Recommendations:")
+    st.subheader("For that, we recommend using one or a combination of the following..")
 
     # Show products in a grid (3 per row)
     num_cols = 3
