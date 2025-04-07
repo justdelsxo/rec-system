@@ -75,7 +75,9 @@ synonym_map = {
     'bikini bumps': 'razor bumps',
     'discoloration': 'discolouration',
     'uneven tone': 'hyperpigmentation',
-    'dark area' : 'hyperpigmenation'
+    'dark area' : 'hyperpigmenation',
+'dark inner thighs': 'hyperpigmentation'
+
 
 }
 
