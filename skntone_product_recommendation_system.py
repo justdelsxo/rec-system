@@ -190,7 +190,14 @@ def multi_concern_recommender(user_input, threshold=0.2):
 #This is where users tell me what their skin concerns are 
 #Based on the input, well recommend products thatll help with those concerns
 
-user_input = st.text_input("What do you want help with — ingrowns, dry skin, dark marks?")
+# Custom prompt above the input box
+st.markdown("**What do you want help with?**")
+
+# Input box with faded placeholder text
+user_input = st.text_input(
+    label="",
+    placeholder="ingrowns, dry skin, dark marks?",
+)
 
 if user_input:
     recommendations = multi_concern_recommender(user_input)
