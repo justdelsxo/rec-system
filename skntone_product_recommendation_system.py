@@ -156,7 +156,9 @@ if user_input:
                 st.image(row['image'], use_column_width=True)
                 st.markdown(f"**{row['product']}**")
                 st.markdown(f"_Concern:_ {row['matched_concern']}")
-                st.markdown(f"**Loved by SKNTONE customers:** `{round(row['sentiment'], 2)}`")
+
+                score = int((row['sentiment'] + 1) / 2 * 100)
+                st.markdown(f"**Loved by SKNTONE customers:** {score}%")
 
 # -----------------------------
 # Visual Charts
