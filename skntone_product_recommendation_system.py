@@ -103,6 +103,12 @@ def recommend_products(user_input, top_n=3):
     top_indices = similarity_scores.argsort()[::-1][:top_n]
     return prods.iloc[top_indices][['product', 'concern', 'key_ingredient']]
 
+# Prepare for TF-IDF
+prods['search_text'] = prods['concern'] + " " + prods['key_ingredient']
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(prods['search_text'])
+
 # Testing the system with fuzzy/slang input
 user_input = "I need help with ingrowns and razor burn"
 recommendations = recommend_products(user_input)
