@@ -23,7 +23,7 @@ nltk.download('vader_lexicon')
 # Streamlit Styling (Brand Color)
 # -----------------------------
 SKNTONE_COLOR = "#000000"
-st.set_page_config(page_title="SKNTONE Recommender", layout="centered")
+st.set_page_config(page_title="Skntone Product Recommendation System", layout="centered")
 st.markdown(
     f"""
     <style>
@@ -38,8 +38,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("SKNTONE Product Recommendation System")
-st.markdown("Tell us your skin concerns and we’ll recommend the best product(s) for you.")
+st.title("Skntone Product Recommendation System")
+st.markdown("Tell me your skin concerns and we’ll recommend the best product(s) for you.")
 
 # -----------------------------
 # Product Data + Image URLs
