@@ -48,7 +48,7 @@ product_types = prods['product_type'].value_counts()
 
 # Plot the distribution of product types
 plt.figure(figsize=(8, 6))
-sns.barplot(x=product_types.index, y=product_types.values, palette='Set2')
+sns.barplot(x=product_types.index, y=product_types.values, hue=product_types.index, palette='Set2', legend=False)
 plt.title("Distribution of Product Types in Skntone")
 plt.xlabel("Product Type")
 plt.ylabel("Number of Products")
