@@ -58,7 +58,7 @@ st.markdown(
 
 st.markdown(
     """
-    <h1 style='text-align: center; color: black; font-family: Arial;'>Skntone Product Recommendations</h1>
+    <h1 style='text-align: center; color: black; font-family: Arial;'>✨Skntone Product Recommendations✨</h1>
     """,
     unsafe_allow_html=True
 )
