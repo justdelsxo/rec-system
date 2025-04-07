@@ -181,7 +181,7 @@ if user_input:
     recommendations = multi_concern_recommender(user_input)
 
     if not recommendations.empty:
-        st.subheader("I recommend either one or a combination of the following products:")
+        st.subheader("For this, I recommend either one or a combination of the following products:")
 
         num_cols = 3
         rows = [recommendations[i:i+num_cols] for i in range(0, recommendations.shape[0], num_cols)]
