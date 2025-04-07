@@ -145,23 +145,18 @@ if user_input:
 
     st.subheader("Your Personalized Recommendations:")
 
-   
-        for _, row in recommendations.iterrows():
-            emoji = emoji_map.get(row['product_type'], '🌿')
-            st.image(row['image'], width=250)
-            st.markdown(f"""
-            ### {emoji} {row['product']}
-            - **Concern:** _{row['matched_concern']}_
-            - **Sentiment Score:** `{round(row['sentiment'], 2)}`
-            """)
-            st.markdown("---")
+    # Show products in a grid (3 per row)
+    num_cols = 3
+    rows = [recommendations[i:i+num_cols] for i in range(0, recommendations.shape[0], num_cols)]
 
-    elif layout_choice == "Side-by-Side Columns":
-        cols = st.columns(min(3, len(recommendations)))
-        for col, (_, row) in zip(cols, recommendations.iterrows()):
-            emoji = '✨'
-            col.image(row['image'], use_column_width=True)
-            col.markdown(f"**{row['product']}**  \n_{row['matched_concern']}_  \nSentiment: `{round(row['sentiment'], 2)}`")
+    for row_chunk in rows:
+        cols = st.columns(len(row_chunk))
+        for col, (_, row) in zip(cols, row_chunk.iterrows()):
+            with col:
+                st.image(row['image'], use_column_width=True)
+                st.markdown(f"**{row['product']}**")
+                st.markdown(f"_Concern:_ {row['matched_concern']}")
+                st.markdown(f"**Loved by SKNTONE customers:** `{round(row['sentiment'], 2)}`")
 
 # -----------------------------
 # Visual Charts
