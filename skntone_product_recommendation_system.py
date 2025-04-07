@@ -19,7 +19,6 @@ st.markdown(
         background-color: #f5f5f5 !important;
         border: 2px solid black !important;
         border-radius: 10px !important;
-        padding: 2px !important;
        
     }
 
@@ -204,7 +203,7 @@ def multi_concern_recommender(user_input, threshold=0.2):
 # Custom prompt above the input box
 st.markdown(
     """
-    <div style="margin-bottom: -10px; font-weight: bold;">
+    <div style="margin-top: -10px; font-weight: bold;">
         What do you want help with?
     </div>
     """,
