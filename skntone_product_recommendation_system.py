@@ -111,8 +111,14 @@ vectorizer = TfidfVectorizer()
 tfidf_matrix = vectorizer.fit_transform(prods['search_text'])
 
 # Testing the system with fuzzy/slang input
-user_input = "I need help with ingrowns and razor burn"
-recommendations = recommend_products(user_input)
+st.title("SKNTONE Product Recommendation System")
+
+user_input = st.text_input("What skin concern would you like to address? (e.g. ingrowns, dry skin, dark marks)")
+
+if user_input:
+    recommendations = multi_concern_recommender(user_input)
+    st.subheader("Recommended Products for You:")
+    st.dataframe(recommendations[['product', 'matched_concern', 'sentiment']])
 
 # Show results
 print("Top Recommended Products:\n")
