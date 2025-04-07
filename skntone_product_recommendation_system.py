@@ -14,6 +14,27 @@ st.set_page_config(page_title="Product Recommendations", layout="centered")
 st.markdown(
     """
     <style>
+    /* Style Streamlit text input box */
+    div[data-baseweb="input"] > div {
+        background-color: #f5f5f5 !important;  /* light grey background */
+        border: 2px solid black !important;    /* bold black border */
+        border-radius: 10px !important;        /* smooth rounded edges */
+        padding: 10px !important;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);  /* subtle shadow */
+    }
+
+    input {
+        color: black !important;               /* text color */
+        font-size: 16px !important;
+        font-family: 'Arial', sans-serif !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown(
+    """
+    <style>
     /* Style the text input box */
     div[data-baseweb="input"] > div {
         background-color: #f5f5f5 !important;
