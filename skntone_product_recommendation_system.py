@@ -134,7 +134,12 @@ user_input = st.text_input("Enter your skin concerns (e.g. ingrowns, dark marks,
 if user_input:
     recommendations = multi_concern_recommender(user_input)
     st.subheader("Recommended Products for You:")
-    st.dataframe(recommendations[['product', 'matched_concern', 'sentiment']])
+    for index, row in recommendations.iterrows():
+    st.markdown(f"""
+    **{row['product']}**
+    - Concern: _{row['matched_concern']}_
+    - Sentiment Score: `{round(row['sentiment'], 2)}`
+    """)
 
 # -----------------------------
 # Optional Charts
