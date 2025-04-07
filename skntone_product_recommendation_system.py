@@ -19,7 +19,7 @@ st.markdown(
         background-color: #f5f5f5 !important;
         border: 2px solid black !important;
         border-radius: 10px !important;
-        padding: 10px !important;
+       
     }
 
     /* Style the user input text */
@@ -32,7 +32,8 @@ st.markdown(
     /* Style the placeholder (faded) text */
     input::placeholder {
         color: black !important;
-        opacity: 0.6 !important;
+        opacity: 0.4 !important;
+        font-style: italic !important;
     }
     </style>
     """,
