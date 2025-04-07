@@ -139,7 +139,9 @@ def multi_concern_recommender(user_input, threshold=0.2):
             continue  # skip if none match for this concern
 
         matched_prods = prods[indices].copy()
-        matched_prods['match_score'] = combined_scores[indices]
+        # Boost score if product explicitly lists the concern
+boost = matched_prods['concern'].apply(lambda x: 0.5 if concern in x else 0)
+matched_prods['match_score'] = combined_scores[indices] + boost
         matched_prods['matched_concern'] = concern
 
         all_matches = pd.concat([all_matches, matched_prods], ignore_index=True)
