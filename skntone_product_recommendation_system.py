@@ -10,6 +10,7 @@ Original file is located at
 #Customer Segmentation & Journey Mapping
 
 import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Dataset for Skntone's products
 data = [
