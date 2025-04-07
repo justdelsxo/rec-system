@@ -1,10 +1,4 @@
-st.markdown(
-    """
-    <div style="text-align: center;">
-        <img src="https://cdn.shopify.com/s/files/1/0474/0661/2645/files/Skntone_coloured_logo_transparent.png?v=1650906263" alt="SKNTONE Logo" width="200">
-    </div>
-    """,
-    unsafe_allow_html=True
+
     # -*- coding: utf-8 -*-
 """Skntone product recommendation system
 
@@ -27,6 +21,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 nltk.download('vader_lexicon')
+
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="https://cdn.shopify.com/s/files/1/0474/0661/2645/files/Skntone_coloured_logo_transparent.png?v=1650906263" alt="SKNTONE Logo" width="200">
+    </div>
+    """,
+    unsafe_allow_html=True
 
 # -----------------------------
 # Streamlit Styling (Brand Color)
