@@ -57,7 +57,7 @@ st.markdown(
     unsafe_allow_html=True)
 
 st.title("Skntone Product Recommendations")
-st.markdown("Sis, tell me what your skin’s going through — I’ll show you what’s worked for girls just like you.")
+st.markdown("Tell me what your skin’s going through — I’ll show you what’s worked for girls just like you.")
 
 # -----------------------------
 # Product Data + Image URLs
@@ -176,7 +176,7 @@ if user_input:
     recommendations = multi_concern_recommender(user_input)
 
     if not recommendations.empty:
-        st.subheader("Let’s get that skin glowing! These are your best matches:")
+        st.subheader("I recommend either one or a combination of the following products:")
 
         num_cols = 3
         rows = [recommendations[i:i+num_cols] for i in range(0, recommendations.shape[0], num_cols)]
