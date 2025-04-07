@@ -41,7 +41,7 @@ st.markdown(
             font-family: Arial, sans-serif;
         }
         .css-18ni7ap, .css-1d391kg {
-            background-color: #ffffff;
+            background-color: #fad79c;
         }
     </style>
     """,
