@@ -22,7 +22,7 @@ nltk.download('vader_lexicon')
 # -----------------------------
 # Streamlit Styling (Brand Color)
 # -----------------------------
-SKNTONE_COLOR = "#fad79c"
+SKNTONE_COLOR = "#000000"
 st.set_page_config(page_title="SKNTONE Recommender", layout="centered")
 st.markdown(
     f"""
