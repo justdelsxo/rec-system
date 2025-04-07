@@ -36,7 +36,7 @@ concerns = prods['concern'].str.split(',').explode().str.strip().value_counts()
 
 # Plotting the distribution of skin concerns across products
 plt.figure(figsize=(10, 6))
-sns.barplot(x=concerns.index, y=concerns.values, palette='viridis')
+sns.barplot(x=concerns.index, y=concerns.values, hue=concerns.index, palette='viridis', legend=False)
 plt.xticks(rotation=45, ha='right')
 plt.title("Distribution of Skin Concerns Across Skntone Products")
 plt.xlabel("Skin Concern")
