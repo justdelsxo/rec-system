@@ -159,7 +159,7 @@ user_input = st.text_input("What skin concern would you like to address?")
 if user_input:
     recommendations = multi_concern_recommender(user_input)
 
-    st.subheader("Your Personalized Recommendations:")
+    st.subheader("For that, we recommend using one or a combination of the following..")
 
     # Show products in a grid (3 per row)
     num_cols = 3
