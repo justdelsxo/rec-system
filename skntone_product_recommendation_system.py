@@ -38,7 +38,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Skntone Product Recommendation System")
+st.title("Skntone Product Recommendations")
 st.markdown("Tell me what your skins going through & I'll show you whats worked for girls just like you.")
 
 # -----------------------------
@@ -175,20 +175,3 @@ if user_input:
 
                 score = int((row['sentiment'] + 1) / 2 * 100)
                 st.markdown(f"**{score}% of customers with the same concern bought this**")
-
-# -----------------------------
-# Visual Charts
-# -----------------------------
-st.subheader("Skin Concerns Covered by SKNTONE")
-concerns = prods['concern'].str.split(',').explode().str.strip().value_counts()
-fig1, ax1 = plt.subplots()
-sns.barplot(x=concerns.index, y=concerns.values, ax=ax1, palette='viridis')
-plt.xticks(rotation=45, ha='right')
-st.pyplot(fig1)
-
-st.subheader("Top Rated Products by Sentiment")
-top_rated = prods[['product', 'sentiment']].sort_values(by='sentiment', ascending=False)
-fig2, ax2 = plt.subplots()
-ax2.bar(top_rated['product'], top_rated['sentiment'], color='lightgreen')
-plt.xticks(rotation=45)
-st.pyplot(fig2)
