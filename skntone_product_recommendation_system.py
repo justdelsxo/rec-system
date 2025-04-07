@@ -13,10 +13,8 @@ import streamlit as st
 st.set_page_config(page_title="Product Recommendations", layout="centered")
 st.markdown(
     """
-    st.markdown(
-    """
     <style>
-    /* Style Streamlit input box */
+    /* Style the input box */
     div[data-baseweb="input"] > div {
         background-color: #f5f5f5 !important;
         border: 2px solid black !important;
@@ -24,34 +22,17 @@ st.markdown(
         padding: 10px !important;
     }
 
+    /* Style the user input text */
     input {
         color: black !important;
         font-size: 16px !important;
         font-family: 'Arial', sans-serif !important;
     }
 
+    /* Style the placeholder (faded) text */
     input::placeholder {
-        color: black !important;  /* Makes placeholder text visible */
-        opacity: 0.6 !important;  /* Adjusts how faded it looks */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <style>
-    /* Style the text input box */
-    div[data-baseweb="input"] > div {
-        background-color: #f5f5f5 !important;
-        border: 1.5px solid black !important;
-        border-radius: 8px;
-        padding: 8px;
-    }
-
-    input {
         color: black !important;
+        opacity: 0.6 !important;
     }
     </style>
     """,
